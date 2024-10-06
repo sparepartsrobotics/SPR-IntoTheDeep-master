@@ -62,10 +62,11 @@ public class SampleMecanumDrive extends MecanumDrive {
     //Motor and Servo Config
     //Motors
     public DcMotorEx leftFront;
+
     public DcMotorEx leftRear;
     public DcMotorEx rightRear;
     public DcMotorEx rightFront;
-    public DcMotorEx linearSlideOuttake;
+    public DcMotorEx teleArm;
     public DcMotorEx rightRig;
     public DcMotorEx leftRig;
     public DcMotorEx intake;
@@ -76,7 +77,6 @@ public class SampleMecanumDrive extends MecanumDrive {
     public Servo linearSlideRight;
     public Servo LinearSlideLeft;
     public Servo specimenOuttake;
-    //Drone launcher
 
     public static double LATERAL_MULTIPLIER = 1.2;
 
@@ -101,6 +101,7 @@ public class SampleMecanumDrive extends MecanumDrive {
     private List<Integer> lastEncVels = new ArrayList<>();
 
     public SampleMecanumDrive(HardwareMap hardwareMap) {
+
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
 
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
@@ -124,6 +125,9 @@ public class SampleMecanumDrive extends MecanumDrive {
         leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
         rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
         rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        teleArm = hardwareMap.get(DcMotorEx.class, "ta");
+        rightRig = hardwareMap.get(DcMotorEx.class, "rg");
+        leftRig = hardwareMap.get(DcMotorEx.class, "lg");
 
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
