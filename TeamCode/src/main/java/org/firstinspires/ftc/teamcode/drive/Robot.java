@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.teamcode.drive;
-
 import androidx.annotation.NonNull;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER;
@@ -52,22 +51,38 @@ public class Robot extends LinearOpMode{
     private DcMotorEx leftRear;
     private DcMotorEx rightRear;
     private DcMotorEx rightFront;
-    private DcMotorEx teleArm;
-    private DcMotorEx rightRig;
-    private DcMotorEx leftRig;
+    private CRServo teleArm;
+    private DcMotorEx linearSlide;
     private DcMotorEx intake;
     //Servos
     private CRServo collect;
     private Servo boxOuttake;
+    private Servo openClose;
     private Servo pivot;
     private Servo rpIntake;
     private Servo linearSlideRight;
-    private Servo LinearSlideLeft;
+    private Servo linearSlideLeft;
     private Servo specimenOuttake;
     private double joystick1LeftX,joystick1RightX,joystick1LeftY;
     private boolean isExtended = false;
-    public Robot(){
-
+    private boolean isPivot = false;
+    public Robot(DcMotorEx lf, DcMotorEx lr, DcMotorEx rr, DcMotorEx rf, CRServo ta, DcMotorEx ls
+            ,CRServo col, Servo boxOuttake, Servo pivot, Servo rpIntake, Servo linearSlideRight, Servo linearSlideLeft,
+                 Servo specimenOuttake, Servo openClose){
+        leftFront = lf;
+        leftRear = lr;
+        rightRear = rr;
+        rightFront = rf;
+        teleArm = ta;
+        linearSlide = ls;
+        collect = col;
+        this.boxOuttake = boxOuttake;
+        this.pivot = pivot;
+        this.rpIntake = rpIntake;
+        this.linearSlideRight = linearSlideRight;
+        this.linearSlideLeft = linearSlideLeft;
+        this.specimenOuttake = specimenOuttake;
+        this.openClose = openClose;
     }
 
     @Override
@@ -120,37 +135,35 @@ public class Robot extends LinearOpMode{
 
     }
     public void teleArm(){
-        teleArm.setMode(STOP_AND_RESET_ENCODER);
-
-        if(gamepad1.x && !isExtended){
-            teleArm.setTargetPosition(0);
-            teleArm.setMode(RUN_TO_POSITION);
-            teleArm.setPower(1);
-            isExtended = true;
-        }
-        else if(gamepad1.x && isExtended){
-            teleArm.setDirection(DcMotorSimple.Direction.REVERSE);
-            teleArm.setTargetPosition(0);
-            teleArm.setMode(RUN_TO_POSITION);
-            teleArm.setPower(1);
-            isExtended = false;
+        if(gamepad1.x){
+            while (System.currentTimeMillis() < 3000) {
+                teleArm.setPower(1);
+            }
         }
 
-    }
-    public void rigging(){
-        rightRig.setMode(STOP_AND_RESET_ENCODER);
-        leftRig.setMode(STOP_AND_RESET_ENCODER);
-        if(gamepad2.y){
-            rightRig.setTargetPosition(900);
-            rightRig.setMode(RUN_TO_POSITION);
-            rightRig.setPower(1);
-        }
     }
     public void pivot(){
         if(gamepad1.a){
             pivot.setPosition(.5);
         }
-
+    }
+    public void openClose(){
+        if(gamepad1.y && !isPivot){
+            openClose.setPosition(.5);
+            isPivot = true;
+        }
+        else if(gamepad1.y && isPivot) {
+            openClose.setPosition(0);
+            isPivot = false;
+        }
+    }
+    public void linearSlide(){
+        linearSlide.setMode(STOP_AND_RESET_ENCODER);
+        if(gamepad1.b){
+            linearSlide.setTargetPosition(900);
+            linearSlide.setMode(RUN_TO_POSITION);
+            linearSlide.setPower(1);
+        }
     }
 }
 
