@@ -69,7 +69,7 @@ public class SprTeleOp extends LinearOpMode{
             srobot.intake.setDirection(DcMotorSimple.Direction.REVERSE);
             srobot.intake.setPower(1);
         }
-        else{
+        else {
             srobot.telescopicArm.setDirection(Servo.Direction.FORWARD);
             srobot.telescopicArm.setPosition(0.0);
             srobot.intake.setPower(0);
