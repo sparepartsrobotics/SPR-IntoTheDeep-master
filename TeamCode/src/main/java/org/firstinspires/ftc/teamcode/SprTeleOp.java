@@ -59,17 +59,19 @@ public class SprTeleOp extends LinearOpMode{
 
     }
     public void intake(){
-        if(gamepad1.left_trigger > 0){
-            srobot.telescopicArm.setDirection(Servo.Direction.FORWARD);
-            srobot.telescopicArm.setPosition(0.32);
+        if(gamepad1.left_trigger > 0.0) {
             srobot.intake.setDirection(DcMotorSimple.Direction.FORWARD);
             srobot.intake.setPower(1);
-        }
-        else if(gamepad1.right_trigger > 0) {
-            srobot.intake.setDirection(DcMotorSimple.Direction.REVERSE);
-            srobot.intake.setPower(1);
-        }
-        else {
+            telemetry.addData("leftTrigger", gamepad1.left_trigger);
+            srobot.telescopicArm.setDirection(Servo.Direction.FORWARD);
+            if (gamepad1.left_trigger < 0.5) {
+                srobot.telescopicArm.setPosition(0.1);
+            } else if (gamepad1.left_trigger < 1) {
+                srobot.telescopicArm.setPosition(0.2);
+            } else if (gamepad1.left_trigger == 1){
+                srobot.telescopicArm.setPosition(0.32);
+            }
+        } else {
             srobot.telescopicArm.setDirection(Servo.Direction.FORWARD);
             srobot.telescopicArm.setPosition(0.0);
             srobot.intake.setPower(0);
@@ -150,15 +152,20 @@ public class SprTeleOp extends LinearOpMode{
 
     public void linearSlide(){
 
-        if(gamepad1.dpad_right){
+        if(gamepad1.dpad_right) {
             srobot.linearSlide.setTargetPosition(900);
             srobot.linearSlide.setMode(RUN_TO_POSITION);
             srobot.linearSlide.setPower(1);
-            while(srobot.linearSlide.isBusy()){
-
-            }
+        } else if (gamepad1.left_bumper) {
+            srobot.linearSlide.setTargetPosition(0);
+            srobot.linearSlide.setMode(RUN_TO_POSITION);
             srobot.linearSlide.setPower(1);
-            srobot.linearSlide.setMode(RUN_USING_ENCODER);
+
+            //while(srobot.linearSlide.isBusy()){
+
+            //}
+            //srobot.linearSlide.setPower(0.1);
+            //srobot.linearSlide.setMode(RUN_USING_ENCODER);
         }
     }
 }
