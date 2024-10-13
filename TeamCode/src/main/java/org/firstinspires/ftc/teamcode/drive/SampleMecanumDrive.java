@@ -18,7 +18,6 @@ import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationCon
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.hardware.lynx.LynxModule;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -30,7 +29,6 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
@@ -66,18 +64,15 @@ public class SampleMecanumDrive extends MecanumDrive {
     public DcMotorEx leftRear;
     public DcMotorEx rightRear;
     public DcMotorEx rightFront;
-    public CRServo teleArm;
     public DcMotorEx linearSlide;
-    public DcMotorEx intake;
-    public Servo openClose;
-    //Servos
-    public Servo pivot;
-    public CRServo collect;
-    public Servo boxOuttake;
-    public Servo rpIntake;
-    public Servo linearSlideRight;
-    public Servo linearSlideLeft;
-    public Servo specimenOuttake;
+    //public DcMotorEx intake;
+    //servos
+    public Servo specimenHolder;
+    public Servo specimenTilt;
+    public CRServo intake;
+    public Servo boxTilt;
+    public Servo boxArm;
+    public Servo telescopicArm;
 
     public static double LATERAL_MULTIPLIER = 1.2;
 
@@ -128,9 +123,12 @@ public class SampleMecanumDrive extends MecanumDrive {
         rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
         linearSlide = hardwareMap.get(DcMotorEx.class, "ls");
 
-        teleArm = hardwareMap.crservo.get("ta");
-        pivot = hardwareMap.servo.get("pivot");
-        openClose = hardwareMap.servo.get("oc");
+        intake = hardwareMap.crservo.get("intake");
+        specimenTilt = hardwareMap.servo.get("specimenTilt");
+        specimenHolder = hardwareMap.servo.get("specimenHolder");
+        boxTilt = hardwareMap.servo.get("boxTilt");
+        boxArm = hardwareMap.servo.get("boxArm");
+        telescopicArm = hardwareMap.servo.get("teleArm");
 
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
