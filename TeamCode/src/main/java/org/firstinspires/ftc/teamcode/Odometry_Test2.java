@@ -21,7 +21,7 @@ public class Odometry_Test2 extends LinearOpMode
         /** forward (+) and backward (-) are y */
         /** Path from right red alliance station to facing red backdrop */
         //Creates starting position
-        Pose2d startPose = new Pose2d(24, 72, Math.toRadians(-90));
+        Pose2d startPose = new Pose2d(24, 72, Math.toRadians(90));
         drive.setPoseEstimate(startPose);
 
         //Creates the robot's trajectories
@@ -30,24 +30,24 @@ public class Odometry_Test2 extends LinearOpMode
                 //SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
 
-        Trajectory traj2 = drive.trajectoryBuilder(traj1.end(), -90)
+        Trajectory traj2 = drive.trajectoryBuilder(traj1.end(), 90)
                 .lineTo(new Vector2d(48,48))
                 .build();
-        Trajectory traj3 = drive.trajectoryBuilder(traj2.end(), -90)
-                .lineToLinearHeading(new Pose2d(58,63, Math.toRadians(50)))
+        Trajectory traj3 = drive.trajectoryBuilder(traj2.end(), 90)
+                .lineToLinearHeading(new Pose2d(58,63, Math.toRadians(-130)))
                 .build();
-        Trajectory traj4 = drive.trajectoryBuilder(traj3.end(), 50)
-                .lineToLinearHeading(new Pose2d(58,48, Math.toRadians(-90)))
+        Trajectory traj4 = drive.trajectoryBuilder(traj3.end(), -130)
+                .lineToLinearHeading(new Pose2d(58,48, Math.toRadians(90)))
                 .build();
-        Trajectory traj5 = drive.trajectoryBuilder(traj4.end(), -90)
-                .lineToLinearHeading(new Pose2d(58,63, Math.toRadians(50)))
+        Trajectory traj5 = drive.trajectoryBuilder(traj4.end(), 90)
+                .lineToLinearHeading(new Pose2d(58,63, Math.toRadians(-130)))
                 .build();
 
-        Trajectory traj6 = drive.trajectoryBuilder(traj5.end(), 50)
-                .lineToLinearHeading(new Pose2d(55,34,Math.toRadians(-5)))
+        Trajectory traj6 = drive.trajectoryBuilder(traj5.end(), -130)
+                .lineToLinearHeading(new Pose2d(55,34,Math.toRadians(0)))
                 .build();
-        Trajectory traj7 = drive.trajectoryBuilder(traj6.end(), -5)
-                .lineToLinearHeading(new Pose2d(58,63, Math.toRadians(50)))
+        Trajectory traj7 = drive.trajectoryBuilder(traj6.end(), 0)
+                .lineToLinearHeading(new Pose2d(58,63, Math.toRadians(-130)))
                 .build();
 
 

@@ -10,6 +10,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
+import org.firstinspires.ftc.teamcode.drive.SampleTankDrive;
 
 @Autonomous(name = "auto")
 public class Odometry_Test extends LinearOpMode
@@ -24,34 +25,53 @@ public class Odometry_Test extends LinearOpMode
         /** forward (+) and backward (-) are y */
         /** Path from right red alliance station to facing red backdrop */
         //Creates starting position
-        Pose2d startPose = new Pose2d(0, 72, Math.toRadians(-90));
+        Pose2d startPose = new Pose2d(-24, 72, Math.toRadians(90));
         drive.setPoseEstimate(startPose);
 
         //Creates the robot's trajectories
         Trajectory traj1 = drive.trajectoryBuilder(startPose)
-                .lineTo(new Vector2d(0,50))
+                .lineTo(
+                        new Vector2d(0,50),
+                        SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL)
+                )
                 //SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
-        Trajectory traj2 = drive.trajectoryBuilder(traj1.end(), -90)
-                .lineToLinearHeading(new Pose2d(-36,50, Math.toRadians(-178)))
+        Trajectory traj2 = drive.trajectoryBuilder(traj1.end(), 90)
+                .lineTo(new Vector2d(-36,50), SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
-        Trajectory traj3 = drive.trajectoryBuilder(traj2.end(), -178)
-                .lineTo(new Vector2d(-36,30))
+        Trajectory traj3 = drive.trajectoryBuilder(traj2.end(), 90)
+                .lineTo(new Vector2d(-45,12), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
-        Trajectory traj4 = drive.trajectoryBuilder(traj3.end(), -178)
-                .lineTo(new Vector2d(-48,64))
+        Trajectory traj4 = drive.trajectoryBuilder(traj3.end(), 90)
+                .lineTo(new Vector2d(-45,65), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
-        Trajectory traj5 = drive.trajectoryBuilder(traj4.end(), -178)
-                .lineTo(new Vector2d(-43,30))
+        Trajectory traj5 = drive.trajectoryBuilder(traj4.end(), 90)
+                .lineTo(new Vector2d(-45,12), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
-        Trajectory traj6 = drive.trajectoryBuilder(traj5.end(), -178)
-                .lineTo(new Vector2d(-60,64))
+        Trajectory traj6 = drive.trajectoryBuilder(traj5.end(), 90)
+                .lineTo(new Vector2d(-55,12), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
-        Trajectory traj7 = drive.trajectoryBuilder(traj6.end(), -178)
-                .lineTo(new Vector2d(-55,30))
+        Trajectory traj7 = drive.trajectoryBuilder(traj6.end(), 90)
+                .lineTo(new Vector2d(-52,65), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
-        Trajectory traj8 = drive.trajectoryBuilder(traj7.end(), -178)
-                .lineTo(new Vector2d(-65,64))
+        Trajectory traj8 = drive.trajectoryBuilder(traj7.end(), 90)
+                .lineTo(new Vector2d(-52,12), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .build();
+        Trajectory traj9 = drive.trajectoryBuilder(traj8.end(), 90)
+                .lineTo(new Vector2d(-62,12), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .build();
+        Trajectory traj10 = drive.trajectoryBuilder(traj9.end(), 90)
+                .lineTo(new Vector2d(-62,65),SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL) )
                 .build();
 
         //Next two lines are just for FTC OpModes
@@ -69,12 +89,13 @@ public class Odometry_Test extends LinearOpMode
         drive.followTrajectory(traj4);
         sleep(1000);
         drive.followTrajectory(traj5);
-        sleep(1000);
         drive.followTrajectory(traj6);
         sleep(1000);
         drive.followTrajectory(traj7);
         sleep(1000);
         drive.followTrajectory(traj8);
+        drive.followTrajectory(traj9);
+        drive.followTrajectory(traj10);
     }
 
 }
