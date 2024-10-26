@@ -65,7 +65,7 @@ public class SampleMecanumDrive extends MecanumDrive {
     public DcMotorEx rightRear;
     public DcMotorEx rightFront;
     public DcMotorEx linearSlide;
-    //public DcMotorEx intake;
+    public DcMotorEx ascendArm;
     //servos
     public CRServo intake;
     public Servo intakeTilt;
@@ -75,6 +75,8 @@ public class SampleMecanumDrive extends MecanumDrive {
     public Servo boxArm;
     public Servo specimenHolder;
     public Servo specimenTilt;
+    public Servo leftReleaseArm;
+    public Servo rightReleaseArm;
 
     public static double LATERAL_MULTIPLIER = 1.2;
 
@@ -124,6 +126,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
         rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
         linearSlide = hardwareMap.get(DcMotorEx.class, "ls");
+        ascendArm = hardwareMap.get(DcMotorEx.class, "ascendArm");
 
         intake = hardwareMap.crservo.get("intake");
         intakeTilt = hardwareMap.servo.get("intakeTilt");
@@ -133,8 +136,8 @@ public class SampleMecanumDrive extends MecanumDrive {
         boxArm = hardwareMap.servo.get("boxArm");
         specimenTilt = hardwareMap.servo.get("specimenTilt");
         specimenHolder = hardwareMap.servo.get("specimenHolder");
-
-
+        leftReleaseArm = hardwareMap.servo.get("leftReleaseArm");
+        rightReleaseArm = hardwareMap.servo.get("rightReleaseArm");
 
         rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);

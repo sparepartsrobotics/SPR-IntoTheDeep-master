@@ -31,7 +31,7 @@ public class Odometry_Test4 extends LinearOpMode
         srobot.telescopicArm.setPosition(0.0);
 
         srobot.specimenTilt.setPosition(0.75);
-        srobot.specimenHolder.setPosition(0.7);
+        srobot.specimenHolder.setPosition(0.3);
 
         srobot.intakeTilt.setPosition(1.0);
         srobot.intakeArm.setPosition(0.8);
