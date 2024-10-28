@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name = "auto4")
+@Autonomous(name = "Push neutral specimen: Blue")
 public class Odometry_Test4 extends LinearOpMode
 {
     SampleMecanumDrive srobot;

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -8,16 +10,37 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleTankDrive;
 
-@Autonomous(name = "auto")
+@Autonomous(name = "Push neutral specimen: Blue")
 public class Odometry_Test extends LinearOpMode
-{
+{   SampleMecanumDrive srobot;
     @Override public void runOpMode()
     {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        srobot = new SampleMecanumDrive((hardwareMap));
+        srobot.specimenHolder.setPosition(0.3);
+        srobot.boxTilt.setPosition(0.4);
+        srobot.boxArm.setPosition(0.25);
+
+        srobot.linearSlide.setMode(STOP_AND_RESET_ENCODER);
+        srobot.linearSlide.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
+        srobot.telescopicArm.setPosition(0.0);
+
+        srobot.specimenTilt.setPosition(0.75);
+
+
+        srobot.intakeTilt.setPosition(1.0);
+        srobot.intakeArm.setPosition(0.8);
+
+        srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
+        srobot.specimenTilt.setPosition(0.5);
 
         /** Each coordinate is about an inch */
         /** Remember that 0,0 is in the center of the field */
