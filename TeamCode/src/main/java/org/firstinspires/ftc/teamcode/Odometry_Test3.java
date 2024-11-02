@@ -31,14 +31,14 @@ public class Odometry_Test3 extends LinearOpMode
 
         srobot.telescopicArm.setPosition(0.0);
 
-        srobot.specimenTilt.setPosition(0.75);
+
 
 
         srobot.intakeTilt.setPosition(1.0);
         srobot.intakeArm.setPosition(0.8);
 
         srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
-        srobot.specimenTilt.setPosition(0.5);
+        srobot.specimenTilt.setPosition(0.2);
         /** Each coordinate is about an inch */
         /** Remember that 0,0 is in the center of the field */
         /** On the red side start pos, right (+) and left (-) are x, and */
@@ -135,6 +135,7 @@ public class Odometry_Test3 extends LinearOpMode
         if(isStopRequested()) return;
 
         //Robot drives along trajectory
+        srobot.specimenTilt.setPosition(0.5);
         drive.followTrajectory(traj1);
         linSlideHigh();
         specimentTiltUp();
@@ -241,17 +242,17 @@ public class Odometry_Test3 extends LinearOpMode
         srobot.specimenHolder.setPosition(0.75);
 
     }
-    public void extendTeleArm(){
-        srobot.intakeTilt.setDirection(Servo.Direction.FORWARD);
-        srobot.intakeTilt.setPosition(0.19);
-        srobot.intakeArm.setDirection(Servo.Direction.FORWARD);
-        srobot.intakeArm.setPosition(0.07);
-        srobot.telescopicArm.setPosition(.5);
-        long goTime = System.currentTimeMillis()+2000;
-        while (System.currentTimeMillis() < goTime) {
-            srobot.intake.setDirection(DcMotorSimple.Direction.REVERSE);
-            srobot.intake.setPower(1);
-        }
-
-    }
+//    public void extendTeleArm(){
+//        srobot.intakeTilt.setDirection(Servo.Direction.FORWARD);
+//        srobot.intakeTilt.setPosition(0.19);
+//        srobot.intakeArm.setDirection(Servo.Direction.FORWARD);
+//        srobot.intakeArm.setPosition(0.07);
+//        srobot.telescopicArm.setPosition(.5);
+//        long goTime = System.currentTimeMillis()+2000;
+//        while (System.currentTimeMillis() < goTime) {
+//            srobot.intake.setDirection(DcMotorSimple.Direction.REVERSE);
+//            srobot.intake.setPower(1);
+//        }
+//
+//    }
 }

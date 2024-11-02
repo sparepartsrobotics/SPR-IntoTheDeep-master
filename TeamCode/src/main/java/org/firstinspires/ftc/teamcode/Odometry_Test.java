@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleTankDrive;
 
-@Autonomous(name = "Push neutral specimen: Blue")
+@Autonomous(name = "Push yellow sample: Blue")
 public class Odometry_Test extends LinearOpMode
 {   SampleMecanumDrive srobot;
     @Override public void runOpMode()
@@ -35,14 +35,11 @@ public class Odometry_Test extends LinearOpMode
 
         srobot.telescopicArm.setPosition(0.0);
 
-        srobot.specimenTilt.setPosition(0.75);
-
-
         srobot.intakeTilt.setPosition(1.0);
         srobot.intakeArm.setPosition(0.8);
 
         srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
-        srobot.specimenTilt.setPosition(0.5);
+        srobot.specimenTilt.setPosition(0.2);
 
         /** Each coordinate is about an inch */
         /** Remember that 0,0 is in the center of the field */
@@ -102,6 +99,7 @@ public class Odometry_Test extends LinearOpMode
         if(isStopRequested()) return;
 
         //Robot drives along trajectory
+        srobot.specimenTilt.setPosition(0.5);
         drive.followTrajectory(traj1);
         linSlideHigh();
         specimentTiltUp();

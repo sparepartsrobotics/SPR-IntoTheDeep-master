@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleTankDrive;
 
-@Autonomous(name = "Push neutral specimen: Red")
+@Autonomous(name = "Push yellow sample: Red")
 public class Odometry_Test4 extends LinearOpMode
 {   SampleMecanumDrive srobot;
     @Override public void runOpMode()
@@ -35,14 +35,14 @@ public class Odometry_Test4 extends LinearOpMode
 
         srobot.telescopicArm.setPosition(0.0);
 
-        srobot.specimenTilt.setPosition(0.75);
+        srobot.specimenTilt.setPosition(.6);
 
 
         srobot.intakeTilt.setPosition(1.0);
         srobot.intakeArm.setPosition(0.8);
 
         srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
-        srobot.specimenTilt.setPosition(0.5);
+        srobot.specimenTilt.setPosition(0.2);
 
         /** Each coordinate is about an inch */
         /** Remember that 0,0 is in the center of the field */
@@ -62,7 +62,7 @@ public class Odometry_Test4 extends LinearOpMode
                 //SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
         Trajectory traj2 = drive.trajectoryBuilder(traj1.end(), -90)
-                .lineTo(new Vector2d(-7,-40), SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineTo(new Vector2d(-7,-42), SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
         Trajectory traj3 = drive.trajectoryBuilder(traj2.end(), -90)
@@ -101,15 +101,19 @@ public class Odometry_Test4 extends LinearOpMode
         if(isStopRequested()) return;
 
         //Robot drives along trajectory
+        srobot.specimenTilt.setPosition(.5);
         drive.followTrajectory(traj1);
         linSlideHigh();
         specimentTiltUp();
         sleep(500);
         drive.followTrajectory(traj2);
-        sleep(500);
         specimentTiltDown();
+        sleep(500);
         drive.followTrajectory(traj3);
         resetLinSlide();
+        sleep(1000);
+        srobot.intakeTilt.setPosition(1.0);
+        srobot.intakeArm.setPosition(0.8);
         drive.followTrajectory(traj4);
         drive.followTrajectory(traj5);
         drive.followTrajectory(traj6);
@@ -127,7 +131,7 @@ public class Odometry_Test4 extends LinearOpMode
         sleep(300);
         srobot.boxTilt.setDirection(Servo.Direction.FORWARD);
         srobot.boxArm.setDirection(Servo.Direction.FORWARD);
-        srobot.linearSlide.setTargetPosition(1100);
+        srobot.linearSlide.setTargetPosition(1050);
         srobot.linearSlide.setMode(RUN_TO_POSITION);
         srobot.linearSlide.setPower(1);
     }
