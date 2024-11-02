@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER;
 
-@Autonomous(name = "3 cycle specimen: Red")
+@Autonomous(name = "2 cycle specimen: Red")
 public class Odometry_Test3 extends LinearOpMode
 {
     SampleMecanumDrive srobot;
@@ -154,10 +154,10 @@ public class Odometry_Test3 extends LinearOpMode
         drive.followTrajectory(traj11);
         drive.followTrajectory(traj12);
         sleep(500);
+        specimenClose();
         specimentTiltUp();
         drive.followTrajectory(traj13);
         drive.followTrajectory(traj14);
-
         linSlideHigh();
         specimentTiltUp();
         sleep(500);
@@ -200,9 +200,11 @@ public class Odometry_Test3 extends LinearOpMode
         sleep(300);
         srobot.boxTilt.setDirection(Servo.Direction.FORWARD);
         srobot.boxArm.setDirection(Servo.Direction.FORWARD);
-        srobot.linearSlide.setTargetPosition(1100);
+        srobot.linearSlide.setTargetPosition(1050);
         srobot.linearSlide.setMode(RUN_TO_POSITION);
         srobot.linearSlide.setPower(1);
+        srobot.boxTilt.setPosition(0.4);
+        srobot.specimenHolder.setPosition(.3);
     }
     public void linSlideLow(){
         srobot.boxTilt.setDirection(Servo.Direction.FORWARD);

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -11,6 +12,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -48,53 +50,50 @@ public class Odometry_Test extends LinearOpMode
         /** forward (+) and backward (-) are y */
         /** Path from right red alliance station to facing red backdrop */
         //Creates starting position
-        Pose2d startPose = new Pose2d(-24, 72, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(8, 72, Math.toRadians(90));
         drive.setPoseEstimate(startPose);
 
         //Creates the robot's trajectories
         Trajectory traj1 = drive.trajectoryBuilder(startPose)
                 .lineTo(
-                        new Vector2d(0,50),
-                        SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL)
+                        new Vector2d(7,60)
+
                 )
                 //SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
         Trajectory traj2 = drive.trajectoryBuilder(traj1.end(), 90)
-                .lineTo(new Vector2d(-36,50), SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .lineTo(new Vector2d(7,40), SampleMecanumDrive.getVelocityConstraint(20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
         Trajectory traj3 = drive.trajectoryBuilder(traj2.end(), 90)
-                .lineTo(new Vector2d(-45,12), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .lineTo(new Vector2d(7,65))
                 .build();
         Trajectory traj4 = drive.trajectoryBuilder(traj3.end(), 90)
-                .lineTo(new Vector2d(-45,65), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .lineTo(new Vector2d(30,65))
                 .build();
         Trajectory traj5 = drive.trajectoryBuilder(traj4.end(), 90)
-                .lineTo(new Vector2d(-45,12), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .lineTo(new Vector2d(45,12))
                 .build();
         Trajectory traj6 = drive.trajectoryBuilder(traj5.end(), 90)
-                .lineTo(new Vector2d(-55,12), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .lineTo(new Vector2d(45,70))
                 .build();
         Trajectory traj7 = drive.trajectoryBuilder(traj6.end(), 90)
-                .lineTo(new Vector2d(-52,65), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .lineTo(new Vector2d(45,12))
                 .build();
         Trajectory traj8 = drive.trajectoryBuilder(traj7.end(), 90)
-                .lineTo(new Vector2d(-52,12), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .lineTo(new Vector2d(55,12))
                 .build();
         Trajectory traj9 = drive.trajectoryBuilder(traj8.end(), 90)
-                .lineTo(new Vector2d(-62,12), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .lineTo(new Vector2d(55,64))
                 .build();
         Trajectory traj10 = drive.trajectoryBuilder(traj9.end(), 90)
-                .lineTo(new Vector2d(-62,65),SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL) )
+                .lineTo(new Vector2d(63,12))
+                .build();
+        Trajectory traj11 = drive.trajectoryBuilder(traj10.end(), 90)
+                .lineTo(new Vector2d(63,64))
+                .build();
+        Trajectory traj12 = drive.trajectoryBuilder(traj11.end(), 90)
+                .lineToLinearHeading(new Pose2d(20,0, Math.toRadians(0)))
                 .build();
 
         //Next two lines are just for FTC OpModes
@@ -104,21 +103,81 @@ public class Odometry_Test extends LinearOpMode
 
         //Robot drives along trajectory
         drive.followTrajectory(traj1);
-        sleep(1000);
+        linSlideHigh();
+        specimentTiltUp();
+        sleep(500);
         drive.followTrajectory(traj2);
-        sleep(1000);
+        sleep(500);
+        specimentTiltDown();
         drive.followTrajectory(traj3);
-        sleep(1000);
+        resetLinSlide();
         drive.followTrajectory(traj4);
-        sleep(1000);
         drive.followTrajectory(traj5);
         drive.followTrajectory(traj6);
-        sleep(1000);
         drive.followTrajectory(traj7);
-        sleep(1000);
         drive.followTrajectory(traj8);
         drive.followTrajectory(traj9);
         drive.followTrajectory(traj10);
-    }
+        drive.followTrajectory(traj11);
+        drive.followTrajectory(traj12);
 
+    }
+    public void linSlideHigh(){
+        srobot.intakeTilt.setPosition(.4);
+        srobot.intakeArm.setPosition(.7);
+        sleep(300);
+        srobot.boxTilt.setDirection(Servo.Direction.FORWARD);
+        srobot.boxArm.setDirection(Servo.Direction.FORWARD);
+        srobot.linearSlide.setTargetPosition(1100);
+        srobot.linearSlide.setMode(RUN_TO_POSITION);
+        srobot.linearSlide.setPower(1);
+    }
+    public void linSlideLow(){
+        srobot.boxTilt.setDirection(Servo.Direction.FORWARD);
+        srobot.boxArm.setDirection(Servo.Direction.FORWARD);
+        srobot.linearSlide.setTargetPosition(830);
+        srobot.linearSlide.setMode(RUN_TO_POSITION);
+        srobot.linearSlide.setPower(1);
+    }
+    public void specimentTiltUp(){
+        srobot.specimenHolder.setPosition(.3);
+        srobot.specimenTilt.setDirection(Servo.Direction.FORWARD);
+        srobot.specimenTilt.setPosition(0.6);
+
+    }
+    public void specimentTiltDown(){
+        srobot.specimenHolder.setPosition(.28);
+        srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
+        srobot.specimenTilt.setPosition(0.6);
+
+    }
+    public void specimenOpen(){
+        srobot.specimenHolder.setPosition(0.7);
+    }
+    public void specimenClose(){
+        srobot.specimenHolder.setPosition(.3);
+    }
+    public void resetLinSlide(){
+        srobot.specimenTilt.setPosition(.45);
+        srobot.telescopicArm.setPosition(0);
+        sleep(300);
+        srobot.linearSlide.setTargetPosition(0);
+        srobot.linearSlide.setMode(RUN_TO_POSITION);
+        srobot.linearSlide.setPower(0.85);
+        srobot.specimenHolder.setPosition(0.75);
+
+    }
+    public void extendTeleArm() {
+        srobot.intakeTilt.setDirection(Servo.Direction.FORWARD);
+        srobot.intakeTilt.setPosition(0.19);
+        srobot.intakeArm.setDirection(Servo.Direction.FORWARD);
+        srobot.intakeArm.setPosition(0.07);
+        srobot.telescopicArm.setPosition(.5);
+        long goTime = System.currentTimeMillis() + 2000;
+        while (System.currentTimeMillis() < goTime) {
+            srobot.intake.setDirection(DcMotorSimple.Direction.REVERSE);
+            srobot.intake.setPower(1);
+        }
+
+    }
 }
