@@ -31,10 +31,7 @@ public class Odometry_Test3 extends LinearOpMode
 
         srobot.telescopicArm.setPosition(0.0);
 
-
-
-
-        srobot.intakeTilt.setPosition(1.0);
+        srobot.intakeTilt.setPosition(0.35);
         srobot.intakeArm.setPosition(0.8);
 
         srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
@@ -136,7 +133,10 @@ public class Odometry_Test3 extends LinearOpMode
 
         //Robot drives along trajectory
         srobot.specimenTilt.setPosition(0.5);
+        srobot.telescopicArm.setPosition(0.2);
         drive.followTrajectory(traj1);
+        srobot.intakeArm.setPosition(0.4);
+        sleep(250);
         linSlideHigh();
         specimentTiltUp();
         sleep(500);
@@ -167,7 +167,10 @@ public class Odometry_Test3 extends LinearOpMode
         sleep(500);
         specimenOpen();
         drive.followTrajectory(traj16);
+        srobot.boxArm.setPosition(0.32);
         drive.followTrajectory(traj17);
+        resetLinSlide();
+
 //        drive.followTrajectory(traj6);
 //        drive.followTrajectory(traj7);
 //        linSlideHigh();

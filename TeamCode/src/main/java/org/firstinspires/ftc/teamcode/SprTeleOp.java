@@ -57,7 +57,7 @@ public class SprTeleOp extends LinearOpMode{
         srobot.leftReleaseArm.setPosition(0.5);
 
         srobot.intakeTilt.setPosition(1.0);
-        srobot.intakeArm.setPosition(0.8);
+        srobot.intakeArm.setPosition(0.65);
         incTemp = 0.0;
         decTemp = 1.0;
         waitForStart();
@@ -123,7 +123,7 @@ public class SprTeleOp extends LinearOpMode{
             srobot.intakeTilt.setDirection(Servo.Direction.FORWARD);
             srobot.intakeTilt.setPosition(0.19);
             srobot.intakeArm.setDirection(Servo.Direction.FORWARD);
-            srobot.intakeArm.setPosition(0.07);
+            srobot.intakeArm.setPosition(0.05);
             srobot.intake.setDirection(DcMotorSimple.Direction.REVERSE);
             srobot.intake.setPower(1);
             intakeWheel();
@@ -319,7 +319,7 @@ public class SprTeleOp extends LinearOpMode{
             srobot.linearSlide.setPower(0.85);
             srobot.boxTilt.setPosition(0.4);
             srobot.boxArm.setPosition(0.25);
-            srobot.specimenHolder.setPosition(0.75);
+            //srobot.specimenHolder.setPosition(0.75);
             //while(srobot.linearSlide.isBusy()){
 
             //}
