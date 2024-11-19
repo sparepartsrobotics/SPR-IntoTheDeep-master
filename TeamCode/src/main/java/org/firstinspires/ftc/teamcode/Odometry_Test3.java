@@ -23,16 +23,14 @@ public class Odometry_Test3 extends LinearOpMode
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         srobot = new SampleMecanumDrive((hardwareMap));
         srobot.specimenHolder.setPosition(0.3);
-        srobot.boxTilt.setPosition(0.4);
-        srobot.boxArm.setPosition(0.25);
+
 
         srobot.linearSlide.setMode(STOP_AND_RESET_ENCODER);
         srobot.linearSlide.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         srobot.telescopicArm.setPosition(0.0);
 
-        srobot.intakeTilt.setPosition(0.35);
-        srobot.intakeArm.setPosition(0.8);
+
 
         srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
         srobot.specimenTilt.setPosition(0.2);
@@ -135,7 +133,7 @@ public class Odometry_Test3 extends LinearOpMode
         srobot.specimenTilt.setPosition(0.5);
         srobot.telescopicArm.setPosition(0.2);
         drive.followTrajectory(traj1);
-        srobot.intakeArm.setPosition(0.4);
+
         sleep(250);
         linSlideHigh();
         specimentTiltUp();
@@ -167,7 +165,7 @@ public class Odometry_Test3 extends LinearOpMode
         sleep(500);
         specimenOpen();
         drive.followTrajectory(traj16);
-        srobot.boxArm.setPosition(0.32);
+
         drive.followTrajectory(traj17);
         resetLinSlide();
 
@@ -199,20 +197,17 @@ public class Odometry_Test3 extends LinearOpMode
 //        telemetry.addLine("spline 2");
     }
     public void linSlideHigh(){
-        srobot.intakeTilt.setPosition(.4);
-        srobot.intakeArm.setPosition(.7);
+
         sleep(300);
-        srobot.boxTilt.setDirection(Servo.Direction.FORWARD);
-        srobot.boxArm.setDirection(Servo.Direction.FORWARD);
+
         srobot.linearSlide.setTargetPosition(1050);
         srobot.linearSlide.setMode(RUN_TO_POSITION);
         srobot.linearSlide.setPower(1);
-        srobot.boxTilt.setPosition(0.4);
+
         srobot.specimenHolder.setPosition(.3);
     }
     public void linSlideLow(){
-        srobot.boxTilt.setDirection(Servo.Direction.FORWARD);
-        srobot.boxArm.setDirection(Servo.Direction.FORWARD);
+
         srobot.linearSlide.setTargetPosition(830);
         srobot.linearSlide.setMode(RUN_TO_POSITION);
         srobot.linearSlide.setPower(1);

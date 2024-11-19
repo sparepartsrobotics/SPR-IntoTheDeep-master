@@ -27,16 +27,13 @@ public class Odometry_Test extends LinearOpMode
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         srobot = new SampleMecanumDrive((hardwareMap));
         srobot.specimenHolder.setPosition(0.3);
-        srobot.boxTilt.setPosition(0.4);
-        srobot.boxArm.setPosition(0.25);
+
 
         srobot.linearSlide.setMode(STOP_AND_RESET_ENCODER);
         srobot.linearSlide.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         srobot.telescopicArm.setPosition(0.0);
 
-        srobot.intakeTilt.setPosition(1.0);
-        srobot.intakeArm.setPosition(0.8);
 
         srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
         srobot.specimenTilt.setPosition(0.2);
@@ -121,18 +118,11 @@ public class Odometry_Test extends LinearOpMode
 
     }
     public void linSlideHigh(){
-        srobot.intakeTilt.setPosition(.4);
-        srobot.intakeArm.setPosition(.7);
-        sleep(300);
-        srobot.boxTilt.setDirection(Servo.Direction.FORWARD);
-        srobot.boxArm.setDirection(Servo.Direction.FORWARD);
         srobot.linearSlide.setTargetPosition(1100);
         srobot.linearSlide.setMode(RUN_TO_POSITION);
         srobot.linearSlide.setPower(1);
     }
     public void linSlideLow(){
-        srobot.boxTilt.setDirection(Servo.Direction.FORWARD);
-        srobot.boxArm.setDirection(Servo.Direction.FORWARD);
         srobot.linearSlide.setTargetPosition(830);
         srobot.linearSlide.setMode(RUN_TO_POSITION);
         srobot.linearSlide.setPower(1);
@@ -165,17 +155,5 @@ public class Odometry_Test extends LinearOpMode
         srobot.specimenHolder.setPosition(0.75);
 
     }
-    public void extendTeleArm() {
-        srobot.intakeTilt.setDirection(Servo.Direction.FORWARD);
-        srobot.intakeTilt.setPosition(0.19);
-        srobot.intakeArm.setDirection(Servo.Direction.FORWARD);
-        srobot.intakeArm.setPosition(0.07);
-        srobot.telescopicArm.setPosition(.5);
-        long goTime = System.currentTimeMillis() + 2000;
-        while (System.currentTimeMillis() < goTime) {
-            srobot.intake.setDirection(DcMotorSimple.Direction.REVERSE);
-            srobot.intake.setPower(1);
-        }
 
-    }
 }

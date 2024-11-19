@@ -39,8 +39,8 @@ public class SprTeleOp extends LinearOpMode{
     @Override public void runOpMode(){
         srobot = new SampleMecanumDrive(hardwareMap);
 
-        srobot.boxTilt.setPosition(0.4);
-        srobot.boxArm.setPosition(0.25);
+//        srobot.boxTilt.setPosition(0.4);
+//        srobot.boxArm.setPosition(0.25);
 
         srobot.linearSlide.setMode(STOP_AND_RESET_ENCODER);
         srobot.linearSlide.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -53,11 +53,13 @@ public class SprTeleOp extends LinearOpMode{
         srobot.specimenTilt.setPosition(0.75);
         srobot.specimenHolder.setPosition(0.75);
 
-        srobot.rightReleaseArm.setPosition(0.5);
-        srobot.leftReleaseArm.setPosition(0.5);
+//        srobot.rightReleaseArm.setPosition(0.5);
+//        srobot.leftReleaseArm.setPosition(0.5);
 
-        srobot.intakeTilt.setPosition(1.0);
-        srobot.intakeArm.setPosition(0.65);
+        srobot.clawTilt.setPosition(.5);
+        srobot.clawArm.setPosition(0.65);
+        srobot.claw.setPosition(.6);
+        srobot.clawRotate.setPosition(0);
         incTemp = 0.0;
         decTemp = 1.0;
         waitForStart();
@@ -68,13 +70,15 @@ public class SprTeleOp extends LinearOpMode{
             robotMovement();
             //teleArm();
             tiltBox();
-            intakeWheel();
+            claw();
             teleArm();
+            rotateClaw();
+            openCloseClaw();
             specimenTilt();
             linearSlide();
             specimenGrab();
-            tiltArm();
-            ascend();
+//            tiltArm();
+            //`     ascend();
             telemetry.addData("linearSlide", srobot.linearSlide.getCurrentPosition());
             telemetry.addData("ascendArm", srobot.ascendArm.getCurrentPosition());
             telemetry.addData("telescopicArm", srobot.telescopicArm.getPosition());
@@ -120,13 +124,10 @@ public class SprTeleOp extends LinearOpMode{
     */
     public void teleArm(){
         if(gamepad1.right_trigger > 0.0){
-            srobot.intakeTilt.setDirection(Servo.Direction.FORWARD);
-            srobot.intakeTilt.setPosition(0.19);
-            srobot.intakeArm.setDirection(Servo.Direction.FORWARD);
-            srobot.intakeArm.setPosition(0.05);
-            srobot.intake.setDirection(DcMotorSimple.Direction.REVERSE);
-            srobot.intake.setPower(1);
-            intakeWheel();
+            srobot.clawArm.setPosition(.34);
+            srobot.clawTilt.setPosition(.5);
+            srobot.claw.setPosition(0);
+            srobot.clawRotate.setPosition(.87);
             if(incTemp < gamepad1.right_trigger) {
                 srobot.telescopicArm.setPosition(.5 * gamepad1.right_trigger);
                 telemetry.addData("incTemp: ", incTemp);
@@ -149,24 +150,20 @@ public class SprTeleOp extends LinearOpMode{
             telemetry.addData("decTemp: ", decTemp );
 
             // srobot.telescopicArm.setPosition(srobot.telescopicArm.getPosition() + .01);
-            intakeWheel();
         }
         if (gamepad1.a) {
-            srobot.intakeTilt.setPosition(1.0);
-            srobot.intakeArm.setPosition(0.65);
-            srobot.telescopicArm.setPosition(0.2);
+            srobot.clawTilt.setPosition(.5);
+            srobot.clawArm.setPosition(0.65);
+            srobot.claw.setPosition(.6);
+            srobot.clawRotate.setPosition(0);
         }
     }
 
-    public void intakeWheel() {
+    public void claw() {
         if (gamepad1.right_bumper) {
-            srobot.intake.setDirection(DcMotorSimple.Direction.REVERSE);
-            srobot.intake.setPower(0);
+            srobot.claw.setPosition(.5);
         } else if (gamepad1.left_bumper) {
-            srobot.intake.setDirection(DcMotorSimple.Direction.FORWARD);
-            srobot.intake.setPower(1);
-        } else if (srobot.intakeTilt.getPosition() == 1.0) {
-            srobot.intake.setPower(0);
+            srobot.claw.setPosition(0);
         }
     }
 
@@ -238,42 +235,42 @@ public class SprTeleOp extends LinearOpMode{
             srobot.specimenHolder.setPosition(0.75);
         }
     }
-    public void tiltArm(){
-        if(gamepad1.dpad_down){
-            srobot.intakeArm.setPosition(.05);
-        }
-        if(gamepad1.dpad_left){
-            srobot.intakeArm.setPosition(.08);
-        }
-    }
+//    public void tiltArm(){
+//        if(gamepad1.dpad_down){
+//            srobot.intakeArm.setPosition(.05);
+//        }
+//        if(gamepad1.dpad_left){
+//            srobot.intakeArm.setPosition(.08);
+//        }
+//    }
 
     public void tiltBox() {
         if (gamepad1.b) {
-            srobot.boxTilt.setPosition(0.73);
+            srobot.box.setPosition(0.73);
         }
     }
 
-    public void ascend() {
-        if (gamepad2.left_bumper && gamepad2.left_trigger > 0) {
-            srobot.leftReleaseArm.setPosition(0.8);
-            srobot.rightReleaseArm.setPosition(0.3);
-            isArmReleased = true;
-        }
-
-        if(gamepad2.right_bumper && isArmReleased) {
-            srobot.telescopicArm.setPosition(0.0);
-
-            srobot.specimenTilt.setPosition(0.75);
-            srobot.specimenHolder.setPosition(0.7);
-
-            srobot.intakeTilt.setPosition(1.0);
-            srobot.intakeArm.setPosition(0.8);
-
-            srobot.ascendArm.setTargetPosition(4800);
-            srobot.ascendArm.setMode(RUN_TO_POSITION);
-            srobot.ascendArm.setPower(0.9);
-        }
-    }
+//    public void ascend() {
+//        if (gamepad2.left_bumper && gamepad2.left_trigger > 0) {
+//            srobot.leftReleaseArm.setPosition(0.8);
+//            srobot.rightReleaseArm.setPosition(0.3);
+//            isArmReleased = true;
+//        }
+//
+//        if(gamepad2.right_bumper && isArmReleased) {
+//            srobot.telescopicArm.setPosition(0.0);
+//
+//            srobot.specimenTilt.setPosition(0.75);
+//            srobot.specimenHolder.setPosition(0.7);
+//
+//            srobot.intakeTilt.setPosition(1.0);
+//            srobot.intakeArm.setPosition(0.8);
+//
+//            srobot.ascendArm.setTargetPosition(4800);
+//            srobot.ascendArm.setMode(RUN_TO_POSITION);
+//            srobot.ascendArm.setPower(0.9);
+//        }
+//    }
 
     public void linearSlide(){
         //High Bucket
@@ -283,11 +280,9 @@ public class SprTeleOp extends LinearOpMode{
             srobot.linearSlide.setTargetPosition(900);
             srobot.linearSlide.setMode(RUN_TO_POSITION);
             srobot.linearSlide.setPower(1);
-            srobot.boxTilt.setDirection(Servo.Direction.FORWARD);
-            srobot.boxArm.setDirection(Servo.Direction.FORWARD);
-            srobot.boxArm.setPosition(0.85);
+
             sleep(500);
-            srobot.boxTilt.setPosition(1.0);
+
             srobot.linearSlide.setTargetPosition(1800);
             srobot.linearSlide.setMode(RUN_TO_POSITION);
             srobot.linearSlide.setPower(1);
@@ -295,8 +290,7 @@ public class SprTeleOp extends LinearOpMode{
         } else if (gamepad1.dpad_up) {
             srobot.telescopicArm.setPosition(0.3);
             sleep(300);
-            srobot.boxTilt.setDirection(Servo.Direction.FORWARD);
-            srobot.boxArm.setDirection(Servo.Direction.FORWARD);
+
             srobot.linearSlide.setTargetPosition(950);
             srobot.linearSlide.setMode(RUN_TO_POSITION);
             srobot.linearSlide.setPower(1);
@@ -317,8 +311,6 @@ public class SprTeleOp extends LinearOpMode{
             srobot.linearSlide.setTargetPosition(0);
             srobot.linearSlide.setMode(RUN_TO_POSITION);
             srobot.linearSlide.setPower(0.85);
-            srobot.boxTilt.setPosition(0.4);
-            srobot.boxArm.setPosition(0.25);
             //srobot.specimenHolder.setPosition(0.75);
             //while(srobot.linearSlide.isBusy()){
 
@@ -327,4 +319,21 @@ public class SprTeleOp extends LinearOpMode{
             //srobot.linearSlide.setMode(RUN_USING_ENCODER);
         }
     }
+    public void rotateClaw(){
+        if(gamepad1.dpad_right){
+            srobot.clawTilt.setPosition(0.5);
+        }
+        else if(gamepad1.dpad_left){
+            srobot.clawTilt.setPosition(.85);
+        }
+    }
+    public void openCloseClaw(){
+        if(gamepad1.right_bumper){
+            srobot.claw.setPosition(1);
+        }
+        else if(gamepad1.left_bumper){
+            srobot.claw.setPosition(0);
+        }
+    }
+
 }
