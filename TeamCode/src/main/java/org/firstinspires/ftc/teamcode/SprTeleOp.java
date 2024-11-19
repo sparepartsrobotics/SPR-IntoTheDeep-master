@@ -41,7 +41,10 @@ public class SprTeleOp extends LinearOpMode{
 
 //        srobot.boxTilt.setPosition(0.4);
 //        srobot.boxArm.setPosition(0.25);
-
+        srobot.clawTilt.setPosition(.5);
+        srobot.clawArm.setPosition(0.66);
+        srobot.claw.setPosition(1);
+        srobot.clawRotate.setPosition(0.2);
         srobot.linearSlide.setMode(STOP_AND_RESET_ENCODER);
         srobot.linearSlide.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
@@ -56,10 +59,8 @@ public class SprTeleOp extends LinearOpMode{
 //        srobot.rightReleaseArm.setPosition(0.5);
 //        srobot.leftReleaseArm.setPosition(0.5);
 
-        srobot.clawTilt.setPosition(.5);
-        srobot.clawArm.setPosition(0.65);
-        srobot.claw.setPosition(.6);
-        srobot.clawRotate.setPosition(0);
+
+        srobot.box.setPosition(.7);
         incTemp = 0.0;
         decTemp = 1.0;
         waitForStart();
@@ -69,7 +70,7 @@ public class SprTeleOp extends LinearOpMode{
         {
             robotMovement();
             //teleArm();
-            tiltBox();
+            outtake();
             claw();
             teleArm();
             rotateClaw();
@@ -152,10 +153,12 @@ public class SprTeleOp extends LinearOpMode{
             // srobot.telescopicArm.setPosition(srobot.telescopicArm.getPosition() + .01);
         }
         if (gamepad1.a) {
+            srobot.box.setPosition(.7);
             srobot.clawTilt.setPosition(.5);
-            srobot.clawArm.setPosition(0.65);
-            srobot.claw.setPosition(.6);
-            srobot.clawRotate.setPosition(0);
+            srobot.clawArm.setPosition(0.66);
+            srobot.claw.setPosition(1);
+            srobot.clawRotate.setPosition(0.2);
+            srobot.telescopicArm.setPosition(0.0);
         }
     }
 
@@ -244,11 +247,7 @@ public class SprTeleOp extends LinearOpMode{
 //        }
 //    }
 
-    public void tiltBox() {
-        if (gamepad1.b) {
-            srobot.box.setPosition(0.73);
-        }
-    }
+
 
 //    public void ascend() {
 //        if (gamepad2.left_bumper && gamepad2.left_trigger > 0) {
@@ -333,6 +332,13 @@ public class SprTeleOp extends LinearOpMode{
         }
         else if(gamepad1.left_bumper){
             srobot.claw.setPosition(0);
+        }
+    }
+    public void outtake() {
+        if (gamepad1.b) {
+            srobot.clawArm.setPosition(.65);
+            sleep(300);
+            srobot.box.setPosition(.3);
         }
     }
 
