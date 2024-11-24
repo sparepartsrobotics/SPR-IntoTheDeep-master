@@ -6,7 +6,6 @@ import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENC
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -42,10 +41,10 @@ public class SprTeleOp extends LinearOpMode{
 //        srobot.boxTilt.setPosition(0.4);
 //        srobot.boxArm.setPosition(0.25);
 //        srobot.clawTilt.setDirection(Servo.Direction.REVERSE);
-        srobot.clawTilt.setPosition(0.5);
+        srobot.clawRotate.setPosition(0.5);
         srobot.clawArm.setPosition(0.66);
         srobot.claw.setPosition(1);
-        srobot.clawRotate.setPosition(0.2);
+        srobot.clawTilt.setPosition(0.2);
         srobot.linearSlide.setMode(STOP_AND_RESET_ENCODER);
         srobot.linearSlide.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
@@ -127,11 +126,12 @@ public class SprTeleOp extends LinearOpMode{
     */
     public void teleArm(){
         if(gamepad1.right_trigger > 0.0){
-            srobot.clawTilt.setPosition(.5);
+            //srobot.clawRotate.setPosition(.5);
+            srobot.clawArm.setPosition(.4);
+
+            //srobot.claw.setPosition(1.0);
             sleep(300);
-            srobot.clawArm.setPosition(.37);
-            srobot.claw.setPosition(0);
-            srobot.clawRotate.setPosition(.87);
+            srobot.clawTilt.setPosition(.87);
             if(incTemp < gamepad1.right_trigger) {
                 srobot.telescopicArm.setPosition(.5 * gamepad1.right_trigger);
                 telemetry.addData("incTemp: ", incTemp);
@@ -156,24 +156,36 @@ public class SprTeleOp extends LinearOpMode{
             // srobot.telescopicArm.setPosition(srobot.telescopicArm.getPosition() + .01);
         }
         if (gamepad1.a) {
-            srobot.clawTilt.setPosition(.5);
-            srobot.box.setPosition(.7);
-            sleep(300);
-            srobot.clawArm.setPosition(0.69);
-            srobot.claw.setPosition(1);
-            srobot.clawRotate.setPosition(0.3);
+            if (srobot.clawArm.getPosition() != 0.69) {
+                srobot.clawArm.setPosition(0.4);
+                srobot.box.setPosition(.7);
+                srobot.clawTilt.setPosition(0.1);
+                sleep(800);
+                srobot.clawArm.setPosition(0.69);
+                if (srobot.claw.getPosition() >= 0.5) {
+                    srobot.claw.setPosition(1);
+                    srobot.clawRotate.setPosition(.5);
+                } else if (srobot.claw.getPosition() < 0.5) {
+                    srobot.claw.setPosition(0);
+                    srobot.clawRotate.setPosition(.85);
+                }
+                sleep(300);
+            }
+            srobot.clawTilt.setPosition(0.3);
             srobot.telescopicArm.setPosition(0.0);
         }
     }
     public void pushClawDown(){
         if(gamepad1.dpad_down){
             srobot.clawArm.setPosition(.32);
-            srobot.clawRotate.setPosition(.8);
+            srobot.clawTilt.setPosition(0.87);
         }
     }
     public void claw() {
+        //close
         if (gamepad1.right_bumper) {
             srobot.claw.setPosition(.5);
+        //open
         } else if (gamepad1.left_bumper) {
             srobot.claw.setPosition(0);
         }
@@ -291,7 +303,7 @@ public class SprTeleOp extends LinearOpMode{
 
             sleep(500);
 
-            srobot.linearSlide.setTargetPosition(2200);
+            srobot.linearSlide.setTargetPosition(2300);
             srobot.linearSlide.setMode(RUN_TO_POSITION);
             srobot.linearSlide.setPower(1);
         //Brings linear slide to high bar for specimen
@@ -331,10 +343,10 @@ public class SprTeleOp extends LinearOpMode{
     }
     public void rotateClaw(){
         if(gamepad1.dpad_right){
-            srobot.clawTilt.setPosition(0.5);
+            srobot.clawRotate.setPosition(0.5);
         }
         else if(gamepad1.dpad_left){
-            srobot.clawTilt.setPosition(.85);
+            srobot.clawRotate.setPosition(.85);
         }
     }
     public void openCloseClaw(){
@@ -350,7 +362,7 @@ public class SprTeleOp extends LinearOpMode{
         if (gamepad1.b ) {
             srobot.clawArm.setPosition(.65);
             sleep(300);
-            srobot.box.setPosition(.1);
+            srobot.box.setPosition(.2);
 
         }
 

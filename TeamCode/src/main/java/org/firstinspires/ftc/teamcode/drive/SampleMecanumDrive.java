@@ -19,7 +19,6 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAcceleration
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -68,8 +67,8 @@ public class SampleMecanumDrive extends MecanumDrive {
     public DcMotorEx ascendArm;
     //servos
     public Servo claw;
-    public Servo clawTilt;
     public Servo clawRotate;
+    public Servo clawTilt;
     public Servo clawArm;
 //    public CRServo intake;
 //    public Servo intakeTilt;
@@ -136,12 +135,12 @@ public class SampleMecanumDrive extends MecanumDrive {
         ascendArm = hardwareMap.get(DcMotorEx.class, "ascendArm");
         //Control Hub servo port 5
         claw = hardwareMap.servo.get("claw");
-        //Expansion Hub servo port 1
-        clawTilt = hardwareMap.servo.get("clawTilt");
+        //Expansion Hub servo port 0
+        clawRotate = hardwareMap.servo.get("clawRotate");
         //Control Hub servo port 2
         clawArm = hardwareMap.servo.get("clawArm");
         //Control Hub servo port 3
-        clawRotate = hardwareMap.servo.get("clawRotate");
+        clawTilt = hardwareMap.servo.get("clawTilt");
 //        intakeTilt = hardwareMap.servo.get("intakeTilt");
 //        intakeArm = hardwareMap.servo.get("intakeArm");
         //Control Hub servo port 4
