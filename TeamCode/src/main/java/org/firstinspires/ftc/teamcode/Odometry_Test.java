@@ -26,17 +26,27 @@ public class Odometry_Test extends LinearOpMode
     {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         srobot = new SampleMecanumDrive((hardwareMap));
-        srobot.specimenHolder.setPosition(0.3);
 
-
+        srobot.clawRotate.setPosition(0.5);
+        srobot.clawArm.setPosition(0.66);
+        srobot.claw.setPosition(1);
+        srobot.clawTilt.setPosition(0.2);
         srobot.linearSlide.setMode(STOP_AND_RESET_ENCODER);
         srobot.linearSlide.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
+        srobot.ascendArm.setMode(STOP_AND_RESET_ENCODER);
+        srobot.ascendArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
         srobot.telescopicArm.setPosition(0.0);
 
+        srobot.specimenTilt.setPosition(0.75);
+        srobot.specimenHolder.setPosition(0.75);
 
-        srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
-        srobot.specimenTilt.setPosition(0.2);
+//        srobot.rightReleaseArm.setPosition(0.5);
+//        srobot.leftReleaseArm.setPosition(0.5);
+
+
+        srobot.box.setPosition(.7);
 
         /** Each coordinate is about an inch */
         /** Remember that 0,0 is in the center of the field */
@@ -118,7 +128,10 @@ public class Odometry_Test extends LinearOpMode
 
     }
     public void linSlideHigh(){
-        srobot.linearSlide.setTargetPosition(1100);
+        srobot.telescopicArm.setPosition(0.3);
+        sleep(300);
+
+        srobot.linearSlide.setTargetPosition(1000);
         srobot.linearSlide.setMode(RUN_TO_POSITION);
         srobot.linearSlide.setPower(1);
     }

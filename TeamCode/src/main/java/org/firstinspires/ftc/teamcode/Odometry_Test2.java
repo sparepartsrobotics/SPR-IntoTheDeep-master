@@ -22,16 +22,21 @@ public class Odometry_Test2 extends LinearOpMode
     {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         srobot = new SampleMecanumDrive((hardwareMap));
-        srobot.specimenHolder.setPosition(0.3);
-
-
+        srobot.clawRotate.setPosition(0.5);
+        srobot.clawArm.setPosition(0.66);
+        srobot.claw.setPosition(1);
+        srobot.clawTilt.setPosition(0.2);
         srobot.linearSlide.setMode(STOP_AND_RESET_ENCODER);
         srobot.linearSlide.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
+        srobot.ascendArm.setMode(STOP_AND_RESET_ENCODER);
+        srobot.ascendArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
         srobot.telescopicArm.setPosition(0.0);
 
-        srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
-        srobot.specimenTilt.setPosition(0.2);
+        srobot.specimenTilt.setPosition(0.75);
+        srobot.specimenHolder.setPosition(0.75);
+        srobot.box.setPosition(.7);
         /** Each coordinate is about an inch */
         /** Remember that 0,0 is in the center of the field */
         /** On the red side start pos, right (+) and left (-) are x, and */
@@ -47,36 +52,30 @@ public class Odometry_Test2 extends LinearOpMode
                 //SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
         Trajectory traj2 = drive.trajectoryBuilder(traj1.end(), 90)
-                .lineTo(new Vector2d(-7,40),
+                .lineTo(new Vector2d(-7,45),
                         SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
         Trajectory traj3 = drive.trajectoryBuilder(traj2.end(), 90)
-                .lineTo(new Vector2d(-7,65))
+                .lineTo(new Vector2d(-30,55))
                 .build();
         Trajectory traj4 = drive.trajectoryBuilder(traj3.end(), 90)
-                .lineTo(new Vector2d(-30,65))
+                .splineToConstantHeading(new Vector2d(-46,20), Math.toRadians(90))
                 .build();
-        Trajectory traj5 = drive.trajectoryBuilder(traj4.end(), 90)
-                .lineTo(new Vector2d(-46,12))
-                .build();
-        Trajectory traj6 = drive.trajectoryBuilder(traj5.end(), 90)
-                .lineTo(new Vector2d(-46,65))
+        Trajectory traj6 = drive.trajectoryBuilder(traj4.end(), 90)
+                .lineTo(new Vector2d(-34,65))
                 .build();
         Trajectory traj7 = drive.trajectoryBuilder(traj6.end(), 90)
-                .lineTo(new Vector2d(-40,12))
+                .splineToConstantHeading(new Vector2d(-52,20), Math.toRadians(-90))
                 .build();
-        Trajectory traj8 = drive.trajectoryBuilder(traj7.end(), 90)
-                .lineTo(new Vector2d(-52,12))
-                .build();
-        Trajectory traj9 = drive.trajectoryBuilder(traj8.end(), 90)
+        Trajectory traj9 = drive.trajectoryBuilder(traj7.end(), 90)
                 .lineTo(new Vector2d(-55,65))
                 .build();
         Trajectory traj10 = drive.trajectoryBuilder(traj9.end(), 90)
                 .lineTo(new Vector2d(-55,60))
                 .build();
         Trajectory traj11 = drive.trajectoryBuilder(traj10.end(), 90)
-                .lineToLinearHeading(new Pose2d(-49,65, Math.toRadians(-88)))
+                .lineToLinearHeading(new Pose2d(-49,72, Math.toRadians(-90)))
                 .build();
         Trajectory traj12 = drive.trajectoryBuilder(traj11.end(), -87)
                 .lineTo(new Vector2d(-48.5,71))
@@ -88,13 +87,13 @@ public class Odometry_Test2 extends LinearOpMode
                 .lineToLinearHeading(new Pose2d(0,60,Math.toRadians(90)))
                 .build();
         Trajectory traj15 = drive.trajectoryBuilder(traj14.end(), 90)
-                .lineTo(new Vector2d(0,41))
+                .lineTo(new Vector2d(0,43))
                 .build();
         Trajectory traj16 = drive.trajectoryBuilder(traj15.end(), 90)
                 .lineTo(new Vector2d(0,60))
                 .build();
         Trajectory traj17 = drive.trajectoryBuilder(traj16.end(), 90)
-                .lineTo(new Vector2d(-48,65))
+                .lineToLinearHeading(new Pose2d(-48.5,69, Math.toRadians(-90)))
                 .build();
 //        Trajectory traj8 = drive.trajectoryBuilder(traj7.end(), 90)
 //                .lineTo(new Vector2d(0,42),
@@ -129,43 +128,32 @@ public class Odometry_Test2 extends LinearOpMode
 
         //Robot drives along trajectory
         srobot.specimenTilt.setPosition(0.5);
-        srobot.telescopicArm.setPosition(0.2);
-        drive.followTrajectory(traj1);
-
-        sleep(250);
         linSlideHigh();
-        specimentTiltUp();
-        sleep(500);
+        drive.followTrajectory(traj1);
         drive.followTrajectory(traj2);
-        sleep(500);
+        sleep(200);
         specimentTiltDown();
         drive.followTrajectory(traj3);
-        resetLinSlide();
         drive.followTrajectory(traj4);
-        drive.followTrajectory(traj5);
+        resetLinSlide();
         drive.followTrajectory(traj6);
         drive.followTrajectory(traj7);
-        drive.followTrajectory(traj8);
         drive.followTrajectory(traj9);
         drive.followTrajectory(traj10);
         drive.followTrajectory(traj11);
-        drive.followTrajectory(traj12);
-        sleep(500);
+        //drive.followTrajectory(traj12);
         specimenClose();
-        specimentTiltUp();
         drive.followTrajectory(traj13);
-        drive.followTrajectory(traj14);
-
         linSlideHigh();
+        drive.followTrajectory(traj14);
         specimentTiltUp();
-        sleep(500);
         drive.followTrajectory(traj15);
         specimentTiltDown();
-        sleep(500);
         specimenOpen();
         drive.followTrajectory(traj16);
-        drive.followTrajectory(traj17);
         resetLinSlide();
+        drive.followTrajectory(traj17);
+
 //        drive.followTrajectory(traj6);
 //        drive.followTrajectory(traj7);
 //        linSlideHigh();
@@ -194,14 +182,16 @@ public class Odometry_Test2 extends LinearOpMode
 //        telemetry.addLine("spline 2");
     }
     public void linSlideHigh(){
-        //srobot.intakeTilt.setPosition(.4);
-
-        srobot.linearSlide.setTargetPosition(1100);
+        srobot.specimenHolder.setPosition(.3);
+        srobot.specimenTilt.setDirection(Servo.Direction.FORWARD);
+        srobot.specimenTilt.setPosition(0.6);
+        srobot.telescopicArm.setPosition(0.3);
+        sleep(300);
+        srobot.linearSlide.setTargetPosition(1050);
         srobot.linearSlide.setMode(RUN_TO_POSITION);
         srobot.linearSlide.setPower(1);
     }
     public void linSlideLow(){
-
         srobot.linearSlide.setTargetPosition(830);
         srobot.linearSlide.setMode(RUN_TO_POSITION);
         srobot.linearSlide.setPower(1);
@@ -213,25 +203,27 @@ public class Odometry_Test2 extends LinearOpMode
 
     }
     public void specimentTiltDown(){
-        srobot.specimenHolder.setPosition(.28);
         srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
         srobot.specimenTilt.setPosition(0.6);
-
+        sleep(100);
+        srobot.specimenHolder.setPosition(.9);
     }
     public void specimenOpen(){
         srobot.specimenHolder.setPosition(0.7);
     }
     public void specimenClose(){
         srobot.specimenHolder.setPosition(.3);
+        srobot.specimenTilt.setDirection(Servo.Direction.FORWARD);
+        srobot.specimenTilt.setPosition(0.6);
     }
     public void resetLinSlide(){
-        srobot.specimenTilt.setPosition(.45);
         srobot.telescopicArm.setPosition(0);
         sleep(300);
         srobot.linearSlide.setTargetPosition(0);
         srobot.linearSlide.setMode(RUN_TO_POSITION);
         srobot.linearSlide.setPower(0.85);
         srobot.specimenHolder.setPosition(0.75);
+        srobot.specimenTilt.setPosition(0.55);
 
     }
 
