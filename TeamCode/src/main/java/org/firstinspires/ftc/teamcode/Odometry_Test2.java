@@ -200,8 +200,8 @@ public class Odometry_Test2 extends LinearOpMode
         srobot.specimenHolder.setPosition(.3);
         srobot.specimenTilt.setDirection(Servo.Direction.FORWARD);
         srobot.specimenTilt.setPosition(0.6);
-
     }
+
     public void specimentTiltDown(){
         srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
         srobot.specimenTilt.setPosition(0.6);
