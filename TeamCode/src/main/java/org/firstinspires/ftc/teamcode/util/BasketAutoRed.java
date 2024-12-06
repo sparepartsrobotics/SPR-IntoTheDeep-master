@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.util;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER;
@@ -14,8 +14,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name = "Basket Blue")
-public class BasketAutoBlue extends LinearOpMode
+@Autonomous(name = "Basket Red")
+public class BasketAutoRed extends LinearOpMode
 {   SampleMecanumDrive srobot;
     @Override public void runOpMode()
     {
@@ -36,42 +36,42 @@ public class BasketAutoBlue extends LinearOpMode
         /** forward (+) and backward (-) are y */
         /** Path from right red alliance station to facing red backdrop */
         //Creates starting position
-        Pose2d startPose = new Pose2d(16, 72, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(-16, -72, Math.toRadians(-90));
         drive.setPoseEstimate(startPose);
 
         //Creates the robot's trajectories
         Trajectory traj1 = drive.trajectoryBuilder(startPose)
                 .lineTo(
-                        new Vector2d(8,44)
+                        new Vector2d(-8,-44)
 
                 )
                 //SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
-        Trajectory traj2x = drive.trajectoryBuilder(traj1.end(), 0)
+        Trajectory traj2x = drive.trajectoryBuilder(traj1.end(), -90)
                 .lineTo(
-                        new Vector2d(10,50)
+                        new Vector2d(-10,-50)
 
                 )
                 //SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
-        Trajectory traj2= drive.trajectoryBuilder(traj2x.end(), 0)
-                .lineToLinearHeading(new Pose2d(49, 56, Math.toRadians(-90)))
+        Trajectory traj2= drive.trajectoryBuilder(traj2x.end(), -90)
+                .lineToLinearHeading(new Pose2d(-49, -56, Math.toRadians(90)))
                 .build();
-        Trajectory traj3 = drive.trajectoryBuilder(traj2.end(), -90)
-                .lineToLinearHeading(new Pose2d(57, 68, Math.toRadians(-130)))
+        Trajectory traj3 = drive.trajectoryBuilder(traj2.end(), 90)
+                .lineToLinearHeading(new Pose2d(-57, -68, Math.toRadians(50)))
                 .build();
-        Trajectory traj4 = drive.trajectoryBuilder(traj3.end(), -130)
-                .lineToLinearHeading(new Pose2d(58.5, 56.5, Math.toRadians(-90)))
+        Trajectory traj4 = drive.trajectoryBuilder(traj3.end(), 50)
+                .lineToLinearHeading(new Pose2d(-58.5, -56.5, Math.toRadians(90)))
                 .build();
-        Trajectory traj5 = drive.trajectoryBuilder(traj4.end(), -90)
-                .lineToLinearHeading(new Pose2d(57, 68, Math.toRadians(-130)))
+        Trajectory traj5 = drive.trajectoryBuilder(traj4.end(), 90)
+                .lineToLinearHeading(new Pose2d(-57, -68, Math.toRadians(50)))
                 .build();
-        Trajectory traj6 = drive.trajectoryBuilder(traj5.end(), -130)
-                .lineTo(new Vector2d(57, 10))
+        Trajectory traj6 = drive.trajectoryBuilder(traj5.end(), 50)
+                .lineTo(new Vector2d(-57, -10))
                 .build();
-        Trajectory traj7 = drive.trajectoryBuilder(traj6.end(), -130)
+        Trajectory traj7 = drive.trajectoryBuilder(traj6.end(), 50)
                 .lineToLinearHeading(
-                        new Pose2d(23, 10, Math.toRadians(0)),
+                        new Pose2d(-23, -10, Math.toRadians(180)),
                         SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL)
                 )
