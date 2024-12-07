@@ -128,7 +128,7 @@ public class SprTeleOp extends LinearOpMode{
         if(gamepad1.right_trigger > 0.0){
             //srobot.clawRotate.setPosition(.5);
             srobot.clawArm.setPosition(.4);
-
+            srobot.claw.setPosition(1);
             //srobot.claw.setPosition(1.0);
             sleep(300);
             srobot.clawTilt.setPosition(.87);
@@ -156,8 +156,9 @@ public class SprTeleOp extends LinearOpMode{
             // srobot.telescopicArm.setPosition(srobot.telescopicArm.getPosition() + .01);
         }
         if (gamepad1.a) {
+
             if (srobot.clawArm.getPosition() != 0.69) {
-                srobot.clawArm.setPosition(0.4);
+                srobot.clawArm.setPosition(0.3);
                 srobot.box.setPosition(.7);
                 srobot.clawTilt.setPosition(0.1);
                 sleep(800);
@@ -169,9 +170,8 @@ public class SprTeleOp extends LinearOpMode{
                     srobot.claw.setPosition(0);
                     srobot.clawRotate.setPosition(.85);
                 }
-                sleep(300);
             }
-            srobot.clawTilt.setPosition(0.3);
+            srobot.clawTilt.setPosition(0.35);
             srobot.telescopicArm.setPosition(0.0);
         }
     }
