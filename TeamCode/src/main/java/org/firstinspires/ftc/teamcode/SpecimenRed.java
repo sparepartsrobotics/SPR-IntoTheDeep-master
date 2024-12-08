@@ -1,21 +1,21 @@
 package org.firstinspires.ftc.teamcode;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_TO_POSITION;
+import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER;
 
-@Autonomous(name = "Specimen Blue")
-public class Odometry_Test2 extends LinearOpMode
+@Autonomous(name = "Specimen Red")
+public class SpecimenRed extends LinearOpMode
 {
     SampleMecanumDrive srobot;
     @Override public void runOpMode()
@@ -43,62 +43,63 @@ public class Odometry_Test2 extends LinearOpMode
         /** forward (+) and backward (-) are y */
         /** Path from right red alliance station to facing red backdrop */
         //Creates starting position
-        Pose2d startPose = new Pose2d(-16, 72, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(16, -72, Math.toRadians(-90));
         drive.setPoseEstimate(startPose);
 
         //Creates the robot's trajectories
         Trajectory traj2 = drive.trajectoryBuilder(startPose)
-                .lineTo(new Vector2d(-5,44),
+                .lineTo(new Vector2d(5,-44),
                         SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
-        Trajectory traj3 = drive.trajectoryBuilder(traj2.end(), 90)
-                .lineTo(new Vector2d(-30,55))
+        Trajectory traj3 = drive.trajectoryBuilder(traj2.end(), -90)
+                .lineTo(new Vector2d(40,-55))
                 .build();
-        Trajectory traj4 = drive.trajectoryBuilder(traj3.end(), 90)
-                .splineToConstantHeading(new Vector2d(-46,20), Math.toRadians(90))
+        Trajectory traj4 = drive.trajectoryBuilder(traj3.end(), -90)
+                .splineToConstantHeading(new Vector2d(46,-20), Math.toRadians(-90))
                 .build();
         Trajectory traj6 = drive.trajectoryBuilder(traj4.end(), 90)
-                .lineTo(new Vector2d(-34,65))
+                .lineTo(new Vector2d(34,-65))
                 .build();
-        Trajectory traj7 = drive.trajectoryBuilder(traj6.end(), 90)
-                .splineToConstantHeading(new Vector2d(-52,20), Math.toRadians(90))
+        Trajectory traj7 = drive.trajectoryBuilder(traj6.end(), -90)
+                .splineToConstantHeading(new Vector2d(52,-20), Math.toRadians(90))
                 .build();
-        Trajectory traj9 = drive.trajectoryBuilder(traj7.end(), -90)
-                .lineTo(new Vector2d(-55,65))
+        Trajectory traj9 = drive.trajectoryBuilder(traj7.end(), 90)
+                .lineTo(new Vector2d(55,-65))
                 .build();
-        Trajectory traj10 = drive.trajectoryBuilder(traj9.end(), -90)
-                .lineTo(new Vector2d(-55,60))
+        Trajectory traj10 = drive.trajectoryBuilder(traj9.end(), 90)
+                .lineTo(new Vector2d(55,-60))
                 .build();
         Trajectory traj11 = drive.trajectoryBuilder(traj10.end(), 90)
-                .lineToLinearHeading(new Pose2d(-49,68, Math.toRadians(-89)))
+                .lineToLinearHeading(new Pose2d(49,-68, Math.toRadians(89)))
                 .build();
-        Trajectory traj13 = drive.trajectoryBuilder(traj11.end(), -90)
-                .lineTo(new Vector2d(-49,73),
+        Trajectory traj13 = drive.trajectoryBuilder(traj11.end(), 90)
+                .lineTo(new Vector2d(49,-73),
                         SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
-        Trajectory traj14 = drive.trajectoryBuilder(traj13.end(), -90)
-                .lineToLinearHeading(new Pose2d(0,60,Math.toRadians(90)))
+        Trajectory traj14 = drive.trajectoryBuilder(traj13.end(), 90)
+                .lineToLinearHeading(new Pose2d(0,-60,Math.toRadians(-90)))
                 .build();
         Trajectory traj15 = drive.trajectoryBuilder(traj14.end(), 90)
-                .lineTo(new Vector2d(0,43))
+                .lineTo(new Vector2d(-8,-44))
                 .build();
         Trajectory traj16 = drive.trajectoryBuilder(traj15.end(), 90)
-                .lineTo(new Vector2d(0,60))
+                .lineTo(new Vector2d(-8,-60))
                 .build();
         Trajectory traj17 = drive.trajectoryBuilder(traj16.end(), 90)
-                .lineToLinearHeading(new Pose2d(-49,68, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(49,-68, Math.toRadians(90)))
                 .build();
-        Trajectory traj18 = drive.trajectoryBuilder(traj17.end(), -90)
-                .lineTo(new Vector2d(-49,73),
-                        SampleMecanumDrive.getVelocityConstraint(25, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
-                .build();
-        Trajectory traj19 = drive.trajectoryBuilder(traj18.end(), -90)
-                .lineToLinearHeading(new Pose2d(7,43,Math.toRadians(90)),
+        Trajectory traj18 = drive.trajectoryBuilder(traj17.end(), 90)
+                .lineTo(new Vector2d(49,-73),
                         SampleMecanumDrive.getVelocityConstraint(40, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
+                .build();
+        Trajectory traj19 = drive.trajectoryBuilder(traj18.end(), 90)
+                .lineToLinearHeading(new Pose2d(0,-44,Math.toRadians(-90)))
+                .build();
+        Trajectory traj20 = drive.trajectoryBuilder(traj19.end(), -90)
+                .lineToLinearHeading(new Pose2d(49,-68,Math.toRadians(-90)))
                 .build();
 //        Trajectory traj8 = drive.trajectoryBuilder(traj7.end(), 90)
 //                .lineTo(new Vector2d(0,42),
@@ -161,10 +162,11 @@ public class Odometry_Test2 extends LinearOpMode
         drive.followTrajectory(traj17);
         drive.followTrajectory(traj18);
         specimenClose();
-        linSlideHigh();
+        linSlideHigh2();
         drive.followTrajectory(traj19);
         specimentTiltDown();
-
+        resetLinSlide();
+        drive.followTrajectory(traj20);
 //        drive.followTrajectory(traj6);
 //        drive.followTrajectory(traj7);
 //        linSlideHigh();
@@ -226,7 +228,7 @@ public class Odometry_Test2 extends LinearOpMode
     public void specimentTiltDown(){
         srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
         srobot.specimenTilt.setPosition(0.6);
-        sleep(100);
+        sleep(500);
         srobot.specimenHolder.setPosition(.9);
     }
     public void specimenOpen(){
@@ -234,7 +236,7 @@ public class Odometry_Test2 extends LinearOpMode
     }
     public void specimenTiltSpec(){
         srobot.specimenTilt.setDirection(Servo.Direction.FORWARD);
-        srobot.specimenTilt.setPosition(0.55);
+        srobot.specimenTilt.setPosition(0.53);
     }
     public void specimenClose(){
         srobot.specimenHolder.setPosition(.3);
