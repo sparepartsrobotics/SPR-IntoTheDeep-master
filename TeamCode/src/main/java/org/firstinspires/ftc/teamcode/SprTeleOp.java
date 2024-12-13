@@ -21,7 +21,7 @@ public class SprTeleOp extends LinearOpMode{
 
     //public double incTemp= 0.0;
     //public double decTemp= 1.0;
-    public double inc = 0.0001;
+    public double inc = 0.0005;
     public double telePosition = 0.0;
 
     public double clawArmUp = 0.02;//0.7;
