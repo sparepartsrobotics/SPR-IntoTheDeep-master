@@ -124,7 +124,7 @@ public class BasketAutoBlue extends LinearOpMode
         sleep(1300);
         releaseSample();
         resetLinSlide();
-        srobot.clawArm.setPosition(0.66);
+        srobot.clawArm.setPosition(0.02);
         //Neutral Sample #2
         drive.followTrajectory(traj4);
         bringClawArmDown();
@@ -151,6 +151,7 @@ public class BasketAutoBlue extends LinearOpMode
 */
     }
     public void releaseSampleEnd(){
+        srobot.clawArm.setPosition(0.2);
         srobot.box.setPosition(0);
         sleep(500);
 
@@ -207,14 +208,14 @@ public class BasketAutoBlue extends LinearOpMode
         srobot.linearSlide.setPower(0.85);
         srobot.specimenHolder.setPosition(.5);
         srobot.clawRotate.setPosition(0.5);
-        srobot.clawArm.setPosition(0.66);
+        srobot.clawArm.setPosition(0.02);
         srobot.claw.setPosition(1);
         srobot.clawTilt.setPosition(0.2);
 
     }
     public void bringClawArmDown() {
         srobot.claw.setPosition(0);
-        srobot.clawArm.setPosition(0.34);
+        srobot.clawArm.setPosition(0.6);
         sleep(200);
         srobot.clawTilt.setPosition(.87);
         sleep(1000);
@@ -222,10 +223,10 @@ public class BasketAutoBlue extends LinearOpMode
     }
     public void pickUpSample() {
         srobot.clawTilt.setPosition(0.33);
-        srobot.clawArm.setPosition(0.73);
+        srobot.clawArm.setPosition(0.02);
     }
     public void pickUpSample2() {
-        srobot.clawArm.setPosition(0.73);
+        srobot.clawArm.setPosition(0.02);
         srobot.clawTilt.setPosition(0.33);
         sleep(1000);
     }
@@ -233,7 +234,7 @@ public class BasketAutoBlue extends LinearOpMode
         srobot = new SampleMecanumDrive((hardwareMap));
 
         srobot.clawRotate.setPosition(0.5);
-        srobot.clawArm.setPosition(0.66);
+        srobot.clawArm.setPosition(0.02);
         srobot.claw.setPosition(0);
         srobot.clawTilt.setPosition(0.2);
         srobot.linearSlide.setMode(STOP_AND_RESET_ENCODER);

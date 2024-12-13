@@ -23,7 +23,7 @@ public class SpecimenRed extends LinearOpMode
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         srobot = new SampleMecanumDrive((hardwareMap));
         srobot.clawRotate.setPosition(0.5);
-        srobot.clawArm.setPosition(0.66);
+        srobot.clawArm.setPosition(0.02);
         srobot.claw.setPosition(1);
         srobot.clawTilt.setPosition(0.2);
         srobot.linearSlide.setMode(STOP_AND_RESET_ENCODER);
