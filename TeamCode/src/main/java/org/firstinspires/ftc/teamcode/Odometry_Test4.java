@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleTankDrive;
 
 @Autonomous(name = "Push yellow sample: Red")
+@Disabled
 public class Odometry_Test4 extends LinearOpMode
 {   SampleMecanumDrive srobot;
     @Override public void runOpMode()

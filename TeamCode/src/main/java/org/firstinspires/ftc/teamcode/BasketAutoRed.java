@@ -17,6 +17,13 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 @Autonomous(name = "Basket Red")
 public class BasketAutoRed extends LinearOpMode
 {   SampleMecanumDrive srobot;
+    public double clawArmUp = 0.02;//0.7;
+    public double clawTiltUp = .35;//.3
+
+    public double clawArmDownHigh = 0.48;
+    public double clawTiltDown = .90;//.87
+    public double clawArmDownLow = 0.6;
+    public double clawArmOut = 0.2;
     @Override public void runOpMode()
     {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -55,13 +62,13 @@ public class BasketAutoRed extends LinearOpMode
                 //SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL))
                 .build();
         Trajectory traj2= drive.trajectoryBuilder(traj2x.end(), -90)
-                .lineToLinearHeading(new Pose2d(-49, -56, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(-49, -57, Math.toRadians(90)))
                 .build();
         Trajectory traj3 = drive.trajectoryBuilder(traj2.end(), 90)
                 .lineToLinearHeading(new Pose2d(-57, -68, Math.toRadians(50)))
                 .build();
         Trajectory traj4 = drive.trajectoryBuilder(traj3.end(), 50)
-                .lineToLinearHeading(new Pose2d(-58.5, -56.5, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(-58.5, -57.5, Math.toRadians(90)))
                 .build();
         Trajectory traj5 = drive.trajectoryBuilder(traj4.end(), 90)
                 .lineToLinearHeading(new Pose2d(-57, -68, Math.toRadians(50)))
@@ -162,7 +169,7 @@ public class BasketAutoRed extends LinearOpMode
     }
     public void linSlideHighBasket(){
         specimenClose();
-        srobot.claw.setPosition(0);
+        srobot.claw.setPosition(1.0);
         srobot.specimenTilt.setDirection(Servo.Direction.FORWARD);
         srobot.specimenTilt.setPosition(.8);
         sleep(300);
@@ -207,45 +214,48 @@ public class BasketAutoRed extends LinearOpMode
         srobot.linearSlide.setPower(0.85);
         srobot.specimenHolder.setPosition(.5);
         srobot.clawRotate.setPosition(0.5);
-        srobot.clawArm.setPosition(0.02);
-        srobot.claw.setPosition(1);
+        srobot.clawArm.setPosition(0.05);
+        srobot.claw.setPosition(0.825);
+        srobot.clawTilt.setDirection(Servo.Direction.REVERSE);
         srobot.clawTilt.setPosition(0.2);
 
     }
     public void bringClawArmDown() {
-        srobot.claw.setPosition(0);
-        srobot.clawArm.setPosition(0.06);
-        sleep(200);
-        srobot.clawTilt.setPosition(.87);
-        sleep(1000);
         srobot.claw.setPosition(1.0);
+        srobot.clawArm.setPosition(0.45);
+        sleep(200);
+        srobot.clawTilt.setDirection(Servo.Direction.REVERSE);
+        srobot.clawTilt.setPosition(clawTiltDown);
+        sleep(1000);
+        srobot.claw.setPosition(0.825);
     }
     public void pickUpSample() {
+        srobot.clawTilt.setDirection(Servo.Direction.REVERSE);
         srobot.clawTilt.setPosition(0.33);
-        srobot.clawArm.setPosition(0.02);
+        srobot.clawArm.setPosition(0.05);
     }
     public void pickUpSample2() {
-        srobot.clawArm.setPosition(0.73);
-        srobot.clawTilt.setPosition(0.02);
+        srobot.clawArm.setPosition(0.05);
+        srobot.clawTilt.setPosition(0.33);
         sleep(1000);
     }
     public void initializeRobot(){
         srobot = new SampleMecanumDrive((hardwareMap));
 
-        srobot.clawRotate.setPosition(0.5);
-        srobot.clawArm.setPosition(0.02);
-        srobot.claw.setPosition(0);
-        srobot.clawTilt.setPosition(0.2);
         srobot.linearSlide.setMode(STOP_AND_RESET_ENCODER);
         srobot.linearSlide.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         srobot.ascendArm.setMode(STOP_AND_RESET_ENCODER);
         srobot.ascendArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
+        srobot.box.setPosition(.7);
+        srobot.clawRotate.setPosition(0.5);
+        srobot.claw.setPosition(0.825);
+        srobot.clawTilt.setDirection(Servo.Direction.REVERSE);
+        srobot.clawTilt.setPosition(clawTiltUp);
         srobot.telescopicArm.setPosition(0.0);
-
         srobot.specimenTilt.setPosition(0.75);
         srobot.specimenHolder.setPosition(0.75);
-        srobot.box.setPosition(.7);
+        srobot.clawArm.setPosition(clawArmUp);
     }
 }

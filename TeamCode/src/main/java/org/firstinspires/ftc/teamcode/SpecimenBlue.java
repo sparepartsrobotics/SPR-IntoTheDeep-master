@@ -17,25 +17,33 @@ import static com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENC
 public class SpecimenBlue extends LinearOpMode
 {
     SampleMecanumDrive srobot;
+    public double clawArmUp = 0.02;//0.7;
+    public double clawTiltUp = .35;//.3
+
+    public double clawArmDownHigh = 0.48;
+    public double clawTiltDown = .94;//.87
+    public double clawArmDownLow = 0.6;
+    public double clawArmOut = 0.2;
     @Override public void runOpMode()
     {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         srobot = new SampleMecanumDrive((hardwareMap));
-        srobot.clawRotate.setPosition(0.5);
-        srobot.clawArm.setPosition(0.02);
-        srobot.claw.setPosition(1);
-        srobot.clawTilt.setPosition(0.2);
+
         srobot.linearSlide.setMode(STOP_AND_RESET_ENCODER);
         srobot.linearSlide.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         srobot.ascendArm.setMode(STOP_AND_RESET_ENCODER);
         srobot.ascendArm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
+        srobot.box.setPosition(.7);
+        srobot.clawRotate.setPosition(0.5);
+        srobot.claw.setPosition(0.825);
+        srobot.clawTilt.setDirection(Servo.Direction.REVERSE);
+        srobot.clawTilt.setPosition(clawTiltUp);
         srobot.telescopicArm.setPosition(0.0);
-
         srobot.specimenTilt.setPosition(0.75);
         srobot.specimenHolder.setPosition(0.75);
-        srobot.box.setPosition(.7);
+        srobot.clawArm.setPosition(clawArmUp);
         /** Each coordinate is about an inch */
         /** Remember that 0,0 is in the center of the field */
         /** On the red side start pos, right (+) and left (-) are x, and */
@@ -98,7 +106,7 @@ public class SpecimenBlue extends LinearOpMode
                 .lineToLinearHeading(new Pose2d(0,43,Math.toRadians(90)))
                 .build();
         Trajectory traj20 = drive.trajectoryBuilder(traj19.end(), -90)
-                .lineToLinearHeading(new Pose2d(-49,68,Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(-47,68,Math.toRadians(90)))
                 .build();
 //        Trajectory traj8 = drive.trajectoryBuilder(traj7.end(), 90)
 //                .lineTo(new Vector2d(0,42),
@@ -197,7 +205,8 @@ public class SpecimenBlue extends LinearOpMode
         srobot.specimenHolder.setPosition(.3);
         srobot.specimenTilt.setDirection(Servo.Direction.FORWARD);
         srobot.specimenTilt.setPosition(0.6);
-        srobot.telescopicArm.setPosition(0.3);
+        //srobot.telescopicArm.setPosition(0.3);
+        srobot.clawArm.setPosition(0.1);
         sleep(300);
         srobot.linearSlide.setTargetPosition(1075);
         srobot.linearSlide.setMode(RUN_TO_POSITION);
@@ -207,7 +216,8 @@ public class SpecimenBlue extends LinearOpMode
         srobot.specimenHolder.setPosition(.3);
         srobot.specimenTilt.setDirection(Servo.Direction.FORWARD);
         srobot.specimenTilt.setPosition(0.6);
-        srobot.telescopicArm.setPosition(0.3);
+        //srobot.telescopicArm.setPosition(0.3);
+        srobot.clawArm.setPosition(0.1);
         sleep(300);
         srobot.linearSlide.setTargetPosition(1085);
         srobot.linearSlide.setMode(RUN_TO_POSITION);
@@ -227,7 +237,7 @@ public class SpecimenBlue extends LinearOpMode
     public void specimentTiltDown(){
         srobot.specimenTilt.setDirection(Servo.Direction.REVERSE);
         srobot.specimenTilt.setPosition(0.6);
-        sleep(400);
+        sleep(700);
         srobot.specimenHolder.setPosition(.9);
     }
     public void specimenOpen(){
